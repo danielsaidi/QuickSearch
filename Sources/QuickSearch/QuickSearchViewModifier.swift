@@ -68,8 +68,12 @@ public struct QuickSearchViewModifier: ViewModifier {
                 TextField("", text: $text)
                     .focused($isFocused)
                     .onKeyPress {
+                        switch $0.key {
+                        case .delete: return handleBackspace()
+                        default: break
+                        }
                         switch $0.characters {
-                        case .backspace: return handleBackspace()
+                        case .backspace: return .ignored
                         case .space: return handleAppending(.space)
                         case .tab: return .ignored
                         default: return handleAppending($0.characters)

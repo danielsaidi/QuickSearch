@@ -1,6 +1,13 @@
 # Release Notes
 
 
+## 0.1.1
+
+### 🐛 Bug Fixes
+
+* Backspace now works on iOS and iPadOS.
+
+
 ## 0.1
 
 This is the first version of the QuickSearch library.
