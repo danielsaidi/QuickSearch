@@ -1,8 +1,9 @@
 //
-//  String+Types.swift
+//  QuickSearchViewModifier.swift
 //  QuickSearch
 //
 //  Created by Daniel Saidi on 2023-12-19.
+//  Copyright © 2023 Daniel Saidi. All rights reserved.
 //
 
 #if os(iOS) || os(macOS)
@@ -10,10 +11,11 @@ import SwiftUI
 
 /**
  This modifier can be applied to a view hierarchy that has a
- `.searchable` view modifier applied within it, and lets you
- type directly without first focusing on the search field.
+ `.searchable` text field and lets us type to search without
+ first focusing on the text field.
  
- You can apply this modifier with the `.quickSearch` shorthand:
+ You can also apply the modifier with a `.quickSearch(text:)`
+ view extension, which applies the modifier in a shorter way:
  
  ```swift
  struct ContentView: View {
@@ -32,8 +34,8 @@ import SwiftUI
              VStack {
                 TextField("Type here...", text: $text)
              }
-             .quickSearch(text: $query)
              .searchable(text: $query)
+             .quickSearch(text: $query)
          }
      }
  }
@@ -63,38 +65,58 @@ public struct QuickSearchViewModifier: ViewModifier {
     private var isFocused
     
     public func body(content: Content) -> some View {
+        #if os(iOS)
         content
             .background(
-                TextField("", text: $text)
-                    .focused($isFocused)
-                    .onKeyPress {
-                        switch $0.key {
-                        case .delete: return handleBackspace()
-                        default: break
-                        }
-                        switch $0.characters {
-                        case .backspace: return .ignored
-                        case .space: return handleAppending(.space)
-                        case .tab: return .ignored
-                        default: return handleAppending($0.characters)
-                        }
-                    }
-                    .onChange(of: text, {
-                        guard $1.isEmpty else { return }
-                        isFocused = true
-                    })
-                    .onAppear {
-                        isFocused = true
-                    }
-                    .opacity(0.01)
-                    .offset(x: -10_000, y: -10_000)
+                extend {
+                    TextField("", text: $text)
+                        .opacity(0.01)
+                        .offset(x: -10_000, y: -10_000)
+                }
             )
+        #else
+        extend {
+            content
+        }
+        #endif
     }
 }
 
-extension QuickSearchViewModifier {
+private extension QuickSearchViewModifier {
     
-    func handleAppending(
+    func extend<Content: View>(
+        content: @escaping () -> Content
+    ) -> some View {
+        content()
+            .focused($isFocused)
+            .focusEffectDisabled()
+            .onKeyPress(action: handleKeyPress)
+            .onChange(of: text, {
+                guard $1.isEmpty else { return }
+                isFocused = true
+            })
+            .onAppear { isFocused = true }
+    }
+    
+    func handleKeyPress(
+        _ press: KeyPress
+    ) -> KeyPress.Result {
+        guard press.modifiers.isEmpty else { return .ignored }
+        let chars = press.characters
+        switch press.key {
+        case .delete: return handleKeyPressWithBackspace()
+        case .escape: return handleKeyPressWithReset()
+        default: break
+        }
+        switch chars {
+        case .backspace: return handleKeyPressWithBackspace()
+        case .space: return handleKeyPressByAppending(.space)
+        case .tab: return .ignored
+        default: return handleKeyPressByAppending(chars)
+        }
+    }
+    
+    func handleKeyPressByAppending(
         _ char: String
     ) -> KeyPress.Result {
         performAsyncToMakeRepeatPressWork {
@@ -102,11 +124,17 @@ extension QuickSearchViewModifier {
         }
     }
     
-    func handleBackspace() -> KeyPress.Result {
+    func handleKeyPressWithBackspace() -> KeyPress.Result {
         if text.isEmpty { return .ignored }
         return performAsyncToMakeRepeatPressWork {
             text.removeLast()
         }
+    }
+    
+    func handleKeyPressWithReset() -> KeyPress.Result {
+        if text.isEmpty { return .ignored }
+        text = ""
+        return .handled
     }
     
     func performAsyncToMakeRepeatPressWork(
@@ -114,23 +142,6 @@ extension QuickSearchViewModifier {
     ) -> KeyPress.Result {
         DispatchQueue.main.async(execute: action)
         return .handled
-    }
-}
-
-public extension View {
-    
-    /**
-     Create a quick search view modifier.
-     
-     - Parameters:
-       - text: The text binding to use.
-     */
-    func quickSearch(
-        text: Binding<String>
-    ) -> some View {
-        self.modifier(
-            QuickSearchViewModifier(text: text)
-        )
     }
 }
 #endif

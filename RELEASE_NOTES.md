@@ -1,11 +1,24 @@
 # Release Notes
 
 
+## 0.1.2
+
+### 💡 Behavior Changes
+
+* Pressing escape now resets the search field.
+* Quick search now ignores any modified pressed.
+* iOS & macOS now uses two different quick search approaches. 
+
+### 🐛 Bug Fixes
+
+* Backspace now works on both iOS and macOS.
+
+
 ## 0.1.1
 
 ### 🐛 Bug Fixes
 
-* Backspace now works on iOS and iPadOS.
+* Backspace now works on iOS.
 
 
 ## 0.1
