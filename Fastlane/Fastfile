@@ -1,0 +1,38 @@
+fastlane_version "2.129.0"
+
+default_platform :ios
+
+
+platform :ios do
+
+  library_name = "QuickSearch"
+  main_branch = "main"
+
+
+  # Version ================
+
+  desc "Create a new version"
+  lane :version do |options|
+    version_validate
+    docc
+
+    bump_type = options[:type]
+    version = version_bump_podspec(
+      path: 'Version',
+      bump_type: bump_type)
+
+    git_commit(path: "*", message: "Bump to #{version}")
+    add_git_tag(tag: version)
+    push_git_tags()
+    push_to_git_remote()
+  end
+  
+  desc "Validate that the repo is valid for release"
+  lane :version_validate do
+    ensure_git_status_clean
+    ensure_git_branch(branch: main_branch)
+    swiftlint(strict: true)
+    sh("swift test")
+  end
+
+end
