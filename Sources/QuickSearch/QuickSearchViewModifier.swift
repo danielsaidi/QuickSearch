@@ -79,7 +79,7 @@ public struct QuickSearchViewModifier: ViewModifier {
                         guard $1.isEmpty else { return }
                         isFocused = true
                     })
-                    .onAppear() {
+                    .onAppear {
                         isFocused = true
                     }
                     .opacity(0.01)
