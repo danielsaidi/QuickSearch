@@ -40,7 +40,7 @@ import SwiftUI
  ```
  
  When the app launches, the user can now start typing on the
- keyboard directly, without first focusing on the search field.
+ keyboard without first focusing on the search text field.
  */
 public struct QuickSearchViewModifier: ViewModifier {
     
