@@ -52,7 +52,7 @@ public struct QuickSearchViewModifier: ViewModifier {
      - Parameters:
        - text: The text binding to use.
      */
-    init(
+    public init(
         text: Binding<String>
     ) {
         self._text = text

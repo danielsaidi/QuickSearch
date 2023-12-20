@@ -1,6 +1,12 @@
 # Release Notes
 
 
+## 0.1.3
+
+This patch makes the view modifier initializer public.
+
+
+
 ## 0.1.2
 
 ### 💡 Behavior Changes
@@ -14,11 +20,13 @@
 * Backspace now works on both iOS and macOS.
 
 
+
 ## 0.1.1
 
 ### 🐛 Bug Fixes
 
 * Backspace now works on iOS.
+
 
 
 ## 0.1
