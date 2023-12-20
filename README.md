@@ -14,9 +14,9 @@
 
 ## About QuickSearch
 
-QuickSearch lets you type into a searchable text fields by typing on the keyboard without first having to focus on the text field.
+QuickSearch lets you type into a searchable text field without first having to focus on it. This is convenient, since these text fields lack focus control and doesn't allow you to focus programmatically.
 
-QuickSearch can be enabled by applying a `quickSearch` modifier to a view hierarchy that contains a `.searchable` view modifier:
+QuickSearch can be enabled by applying a `quickSearch` view modifier next to the `.searchable` view modifier:
 
 ```swift
  struct ContentView: View {
@@ -42,7 +42,7 @@ QuickSearch can be enabled by applying a `quickSearch` modifier to a view hierar
 }
 ```
 
-When the app launches, the user can now start typing on the keyboard without first focusing on the search text field. 
+Users can now start searching by just typing on the keyboard, without first having to focusing on the search field. 
 
 
 
