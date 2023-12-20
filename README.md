@@ -14,7 +14,7 @@
 
 ## About QuickSearch
 
-QuickSearch lets type into a searchable text fields by typing on the keyboard without first having to focus on the text field.
+QuickSearch lets you type into a searchable text fields by typing on the keyboard without first having to focus on the text field.
 
 QuickSearch can be enabled by applying a `quickSearch` modifier to a view hierarchy that contains a `.searchable` view modifier:
 
