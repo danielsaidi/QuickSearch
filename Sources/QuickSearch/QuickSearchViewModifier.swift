@@ -91,10 +91,10 @@ private extension QuickSearchViewModifier {
             .focused($isFocused)
             .focusEffectDisabled()
             .onKeyPress(action: handleKeyPress)
-            .onChange(of: text, {
+            .onChange(of: text) {
                 guard $1.isEmpty else { return }
                 isFocused = true
-            })
+            }
             .onAppear { isFocused = true }
     }
     
