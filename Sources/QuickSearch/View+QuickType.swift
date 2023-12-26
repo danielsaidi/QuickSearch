@@ -21,12 +21,14 @@ public extension View {
      
      - Parameters:
        - text: The text binding to use.
+       - disabled: Whether or not quick search is disabled.
      */
     func quickSearch(
-        text: Binding<String>
+        text: Binding<String>,
+        disabled: Bool = false
     ) -> some View {
         self.modifier(
-            QuickSearchViewModifier(text: text)
+            QuickSearchViewModifier(text: text, disabled: disabled)
         )
     }
 }

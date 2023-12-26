@@ -51,15 +51,20 @@ public struct QuickSearchViewModifier: ViewModifier {
      
      - Parameters:
        - text: The text binding to use.
+       - disabled: Whether or not quick search is disabled.
      */
     public init(
-        text: Binding<String>
+        text: Binding<String>,
+        disabled: Bool = false
     ) {
         self._text = text
+        self.disabled = disabled
     }
     
     @Binding
     private var text: String
+    
+    private var disabled: Bool
     
     @FocusState
     private var isFocused
@@ -89,7 +94,6 @@ private extension QuickSearchViewModifier {
     ) -> some View {
         content()
             .focused($isFocused)
-            .focusEffectDisabled()
             .onKeyPress(action: handleKeyPress)
             .onChange(of: text) {
                 guard $1.isEmpty else { return }
@@ -101,15 +105,18 @@ private extension QuickSearchViewModifier {
     func handleKeyPress(
         _ press: KeyPress
     ) -> KeyPress.Result {
+        if disabled { return .ignored }
         guard press.modifiers.isEmpty else { return .ignored }
         let chars = press.characters
         switch press.key {
         case .delete: return handleKeyPressWithBackspace()
         case .escape: return handleKeyPressWithReset()
+        case .return: return .ignored
         default: break
         }
         switch chars {
         case .backspace: return handleKeyPressWithBackspace()
+        case .newLine: return .ignored
         case .space: return handleKeyPressByAppending(.space)
         case .tab: return .ignored
         default: return handleKeyPressByAppending(chars)
@@ -127,6 +134,7 @@ private extension QuickSearchViewModifier {
     func handleKeyPressWithBackspace() -> KeyPress.Result {
         if text.isEmpty { return .ignored }
         return performAsyncToMakeRepeatPressWork {
+            if text.isEmpty { return }
             text.removeLast()
         }
     }

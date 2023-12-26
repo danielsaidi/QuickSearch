@@ -11,6 +11,7 @@ import Foundation
 extension String {
     
     static let backspace = String("\u{7f}")
+    static let newLine = String("\n")
     static let space = String(" ")
     static let tab = String("\t")
 }

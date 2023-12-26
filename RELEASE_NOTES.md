@@ -1,6 +1,19 @@
 # Release Notes
 
 
+## 0.1.4
+
+### ✨ Features
+
+* `QuickSearchViewModifier` has a new `disabled` parameter.
+
+### 💡 Behavior Changes
+
+* `QuickSearchViewModifier` now ignores `return` and `newLine`.
+* `QuickSearchViewModifier` no longer applies `focusEffectDisabled`.
+
+
+
 ## 0.1.3
 
 This patch makes the view modifier initializer public.
