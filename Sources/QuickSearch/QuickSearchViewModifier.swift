@@ -16,36 +16,7 @@ import SwiftUI
  to focus on the text field.
  
  You can also apply the modifier with a `.quickSearch(text:)`
- view modifier, which applies this modifier in a shorter way:
- 
- ```swift
- struct ContentView: View {
- 
-     @State
-     var query = ""
-     
-     @State
-     var text = ""
- 
-     @FocusState
-     var isTextFieldFocused
-    
-     var body: some View {
-         NavigationStack {
-             VStack {
-                TextField("Type here...", text: $text)
-             }
-             .searchable(text: $query)
-             .quickSearch(text: $query)
-         }
-     }
- }
- ```
- 
- If you can add `.quickSearch` directly next to `.searchable`,
- you can use `.searchable(text:quickSearch:...)` instead. It
- is not as flexible as `.searchable`, but works well to just
- apply basic `.searchable` capabilities.
+ view modifier, or `.searchable(text:quickSearch:...)`.
  */
 public struct QuickSearchViewModifier: ViewModifier {
     
@@ -53,19 +24,23 @@ public struct QuickSearchViewModifier: ViewModifier {
     ///
     /// - Parameters:
     ///   - text: The text binding to use.
-    ///   - enabled: Whether or not quick search is enabled, by default `true`.
+    ///   - isEnabled: Whether or not quick search is enabled, by default `true`.
+    ///   - isFocused: A custom focused binding, if any.
     public init(
         text: Binding<String>,
-        enabled: Bool = true
+        isEnabled: Bool = true,
+        isFocused: FocusState<Bool>.Binding? = nil
     ) {
         self._text = text
-        self.enabled = enabled
+        self.isEnabled = isEnabled
+        self.isCustomFocused = isFocused
     }
     
     @Binding
     private var text: String
     
-    private var enabled: Bool
+    private var isEnabled: Bool
+    private var isCustomFocused: FocusState<Bool>.Binding?
     
     @FocusState
     private var isFocused
@@ -96,10 +71,15 @@ public extension View {
     /// See ``QuickSearchViewModifier`` for more information.
     func quickSearch(
         text: Binding<String>,
-        enabled: Bool = true
+        isEnabled: Bool = true,
+        isFocused: FocusState<Bool>.Binding? = nil
     ) -> some View {
         self.modifier(
-            QuickSearchViewModifier(text: text, enabled: enabled)
+            QuickSearchViewModifier(
+                text: text,
+                isEnabled: isEnabled,
+                isFocused: isFocused
+            )
         )
     }
     
@@ -109,11 +89,16 @@ public extension View {
     func searchable(
         text: Binding<String>,
         quickSearch: Bool,
+        isFocused: FocusState<Bool>.Binding? = nil,
         placement: SearchFieldPlacement = .automatic,
         prompt: Text? = nil
     ) -> some View {
         self.searchable(text: text, placement: placement, prompt: prompt)
-            .quickSearch(text: text, enabled: quickSearch)
+            .quickSearch(
+                text: text,
+                isEnabled: quickSearch,
+                isFocused: isFocused
+            )
     }
 }
 
@@ -123,19 +108,22 @@ private extension QuickSearchViewModifier {
         content: @escaping () -> Content
     ) -> some View {
         content()
-            .focused($isFocused)
+            .focused(isCustomFocused ?? $isFocused)
             .onKeyPress(action: handleKeyPress)
             .onChange(of: text) {
                 guard $1.isEmpty else { return }
                 isFocused = true
             }
-            .onAppear { isFocused = true }
+            .onAppear {
+                isFocused = true
+                isCustomFocused?.wrappedValue = true
+            }
     }
     
     func handleKeyPress(
         _ press: KeyPress
     ) -> KeyPress.Result {
-        guard enabled else { return .ignored }
+        guard isEnabled else { return .ignored }
         guard press.modifiers.isEmpty else { return .ignored }
         let chars = press.characters
         switch press.key {

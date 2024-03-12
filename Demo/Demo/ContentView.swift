@@ -14,6 +14,8 @@ struct ContentView: View {
     
     @State private var query = ""
     
+    @FocusState private var isFocused
+    
     @AppStorage("isEnabled") private var isEnabled = true
     
     var body: some View {
@@ -26,6 +28,7 @@ struct ContentView: View {
             .searchable(
                 text: $query,
                 quickSearch: true,
+                // isFocused: $isFocused,
                 prompt: Text("Type to search")
             )
         }
