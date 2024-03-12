@@ -3,19 +3,20 @@
 //  QuickSearch
 //
 //  Created by Daniel Saidi on 2023-12-19.
-//  Copyright © 2023 Daniel Saidi. All rights reserved.
+//  Copyright © 2023-2024 Daniel Saidi. All rights reserved.
 //
 
-#if os(iOS) || os(macOS)
 import SwiftUI
 
 /**
  This modifier can be applied to a view hierarchy that has a
- `.searchable` text field and lets us type to search without
- first focusing on the text field.
+ `.searchable` text field, to enable quick search.
+ 
+ Quick search lets users type to search without first having
+ to focus on the text field.
  
  You can also apply the modifier with a `.quickSearch(text:)`
- view extension, which applies the modifier in a shorter way:
+ view modifier, which applies this modifier in a shorter way:
  
  ```swift
  struct ContentView: View {
@@ -41,8 +42,10 @@ import SwiftUI
  }
  ```
  
- When the app launches, the user can now start typing on the
- keyboard without first focusing on the search text field.
+ If you can add `.quickSearch` directly next to `.searchable`,
+ you can use `.searchable(text:quickSearch:...)` instead. It
+ is not as flexible as `.searchable`, but works well to just
+ apply basic `.searchable` capabilities.
  */
 public struct QuickSearchViewModifier: ViewModifier {
     
@@ -70,7 +73,7 @@ public struct QuickSearchViewModifier: ViewModifier {
     private var isFocused
     
     public func body(content: Content) -> some View {
-        #if os(iOS)
+        #if os(iOS) || os(visionOS)
         content
             .background(
                 extend {
@@ -84,6 +87,36 @@ public struct QuickSearchViewModifier: ViewModifier {
             content
         }
         #endif
+    }
+}
+
+public extension View {
+    
+    /// This view modifier can be applied to a view that has
+    /// a `.searchable` modifier, to enable quick search.
+    ///
+    /// See ``QuickSearchViewModifier`` for more information.
+    func quickSearch(
+        text: Binding<String>,
+        disabled: Bool = false
+    ) -> some View {
+        self.modifier(
+            QuickSearchViewModifier(text: text, disabled: disabled)
+        )
+    }
+    
+    /// Apply a `.searchable` modifier, then `.quickSearch`.
+    ///
+    /// See ``QuickSearchViewModifier`` for more information.
+    func searchable(
+        text: Binding<String>,
+        quickSearch: Bool,
+        placement: SearchFieldPlacement = .automatic,
+        prompt: Text? = nil,
+        disabled: Bool = false
+    ) -> some View {
+        self.searchable(text: text, placement: placement, prompt: prompt)
+            .quickSearch(text: text, disabled: !quickSearch)
     }
 }
 
@@ -152,4 +185,3 @@ private extension QuickSearchViewModifier {
         return .handled
     }
 }
-#endif

@@ -12,11 +12,28 @@
 </p>
 
 
+
 ## About QuickSearch
 
-QuickSearch lets you type into a searchable text field without first having to focus on it. This is convenient, since these text fields lack focus control and doesn't allow you to focus programmatically.
+QuickSearch is a SwiftUI SDK that lets you type into a `.searchable` text field without first having to focus on it, which is how many native utilty apps behave.
 
-QuickSearch can be enabled by applying a `quickSearch` view modifier next to the `.searchable` view modifier:
+This is convenient, since `.searchable` text fields lack focus control and doesn't allow you to focus programmatically.
+
+
+
+## Installation
+
+QuickSearch can be installed with the Swift Package Manager:
+
+```
+https://github.com/danielsaidi/QuickSearch.git
+```
+
+
+
+## Getting Started
+
+All you have to do to make QuickSearch work, is to apply a `.quickSearch` view modifier after `.searchable`:
 
 ```swift
  struct ContentView: View {
@@ -42,31 +59,33 @@ QuickSearch can be enabled by applying a `quickSearch` view modifier next to the
 }
 ```
 
-Users can now start searching by just typing on the keyboard, without first having to focusing on the search field. 
+You can now start searching by just typing, without first having to focusing on the search field. 
 
 
 
-## Installation
+## Documentation
 
-QuickSearch can be installed with the Swift Package Manager:
+The [online documentation][Documentation] has more information, articles, code examples, etc.
 
-```
-https://github.com/danielsaidi/QuickSearch.git
-```
 
-If you prefer to not have external dependencies, you can also just copy the source code into your app.
+
+## Demo Application
+
+The demo app lets you explore the library. To try it out, just open and run the `Demo` project.
 
 
 
 ## Support my work 
 
-You can [sponsor me][Sponsors] on GitHub Sponsors or [reach out][Email] for paid support, to help support my [open-source projects][GitHub].
+You can [sponsor me][Sponsors] on GitHub Sponsors or [reach out][Email] for paid support, to help support my [open-source projects][OpenSource].
+
+Your support makes it possible for me to put more work into these projects and make them the best they can be.
 
 
 
 ## Contact
 
-Feel free to reach out if you have questions or if you want to contribute in any way:
+Feel free to reach out if you have questions or want to contribute in any way:
 
 * Website: [danielsaidi.com][Website]
 * Mastodon: [@danielsaidi@mastodon.social][Mastodon]
@@ -82,10 +101,15 @@ QuickSearch is available under the MIT license. See the [LICENSE][License] file 
 
 
 [Email]: mailto:daniel.saidi@gmail.com
-[Website]: https://www.danielsaidi.com
-[GitHub]: https://www.github.com/danielsaidi
-[Twitter]: https://www.twitter.com/danielsaidi
+
+[Website]: https://danielsaidi.com
+[GitHub]: https://github.com/danielsaidi
+[Twitter]: https://twitter.com/danielsaidi
 [Mastodon]: https://mastodon.social/@danielsaidi
+[OpenSource]: https://danielsaidi.com/opensource
 [Sponsors]: https://github.com/sponsors/danielsaidi
+
+[Documentation]: https://danielsaidi.github.io/QuicSearch
+[Getting-Started]: https://danielsaidi.github.io/QuicSearch/documentation/quicsearch/getting-started
 
 [License]: https://github.com/danielsaidi/QuickSearch/blob/master/LICENSE

@@ -1,6 +1,12 @@
 # Release Notes
 
 
+## 0.2
+
+This version makes the SDK support visionOS.
+
+
+
 ## 0.1.4
 
 ### ✨ Features

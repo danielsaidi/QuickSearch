@@ -5,8 +5,23 @@ default_platform :ios
 
 platform :ios do
 
-  library_name = "QuickSearch"
+  name = "QuickSearch"
   main_branch = "main"
+
+
+  # Build ==================
+  
+  lane :build do |options|
+    platform = options[:platform]
+    sh("cd .. && xcodebuild -scheme " + name + " -derivedDataPath .build -destination 'generic/platform=" + platform + "';")
+  end
+
+
+  # Test ==================
+  
+  lane :test_ios do
+    sh("cd .. && xcodebuild test -scheme " + name + " -derivedDataPath .build -destination 'platform=iOS Simulator,name=iPhone 15,OS=17.2' -enableCodeCoverage YES;")
+  end
 
 
   # Version ================
@@ -15,11 +30,8 @@ platform :ios do
   lane :version do |options|
     version_validate
 
-    bump_type = options[:type]
-    version = version_bump_podspec(
-      path: 'Version',
-      bump_type: bump_type)
-
+    type = options[:type]
+    version = version_bump_podspec(path: 'Version', bump_type: type)
     git_commit(path: "*", message: "Bump to #{version}")
     add_git_tag(tag: version)
     push_git_tags()
@@ -31,7 +43,12 @@ platform :ios do
     ensure_git_status_clean
     ensure_git_branch(branch: main_branch)
     swiftlint(strict: true)
-    sh("swift test")
+    build(platform: "iOS")
+    build(platform: "OS X")
+    build(platform: "tvOS")
+    build(platform: "watchOS")
+    build(platform: "xrOS")
+    test_ios
   end
 
 end
