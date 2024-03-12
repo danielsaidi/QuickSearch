@@ -99,7 +99,7 @@ public extension View {
         enabled: Bool = true
     ) -> some View {
         self.modifier(
-            QuickSearchViewModifier(text: text, disabled: enabled)
+            QuickSearchViewModifier(text: text, enabled: enabled)
         )
     }
     
