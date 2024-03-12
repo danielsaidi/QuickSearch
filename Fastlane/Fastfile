@@ -45,8 +45,6 @@ platform :ios do
     swiftlint(strict: true)
     build(platform: "iOS")
     build(platform: "OS X")
-    build(platform: "tvOS")
-    build(platform: "watchOS")
     build(platform: "xrOS")
     test_ios
   end
