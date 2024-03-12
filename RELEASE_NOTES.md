@@ -5,6 +5,11 @@
 
 This version makes the SDK support visionOS.
 
+### ✨ Features
+
+* `View` has a new `searchable(text:quickSearch:...)` extension.
+* `View.quickSearch` flips the `disabled` parameter to `enabled`.
+
 
 
 ## 0.1.4

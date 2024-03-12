@@ -59,7 +59,7 @@ All you have to do to make QuickSearch work, is to apply a `.quickSearch` view m
 }
 ```
 
-You can now start searching by just typing, without first having to focusing on the search field. 
+If you can add `.quickSearch` directly next to `.searchable`, you can use `.searchable(text:quickSearch:...)` instead. It is not as flexible as `.searchable`, but works well to apply basic `.searchable` capabilities.
 
 
 

@@ -49,25 +49,23 @@ import SwiftUI
  */
 public struct QuickSearchViewModifier: ViewModifier {
     
-    /**
-     Create a quick search view modifier.
-     
-     - Parameters:
-       - text: The text binding to use.
-       - disabled: Whether or not quick search is disabled.
-     */
+    /// Create a quick search view modifier.
+    ///
+    /// - Parameters:
+    ///   - text: The text binding to use.
+    ///   - enabled: Whether or not quick search is enabled, by default `true`.
     public init(
         text: Binding<String>,
-        disabled: Bool = false
+        enabled: Bool = true
     ) {
         self._text = text
-        self.disabled = disabled
+        self.enabled = enabled
     }
     
     @Binding
     private var text: String
     
-    private var disabled: Bool
+    private var enabled: Bool
     
     @FocusState
     private var isFocused
@@ -98,10 +96,10 @@ public extension View {
     /// See ``QuickSearchViewModifier`` for more information.
     func quickSearch(
         text: Binding<String>,
-        disabled: Bool = false
+        enabled: Bool = true
     ) -> some View {
         self.modifier(
-            QuickSearchViewModifier(text: text, disabled: disabled)
+            QuickSearchViewModifier(text: text, disabled: enabled)
         )
     }
     
@@ -112,11 +110,10 @@ public extension View {
         text: Binding<String>,
         quickSearch: Bool,
         placement: SearchFieldPlacement = .automatic,
-        prompt: Text? = nil,
-        disabled: Bool = false
+        prompt: Text? = nil
     ) -> some View {
         self.searchable(text: text, placement: placement, prompt: prompt)
-            .quickSearch(text: text, disabled: !quickSearch)
+            .quickSearch(text: text, enabled: quickSearch)
     }
 }
 
@@ -138,7 +135,7 @@ private extension QuickSearchViewModifier {
     func handleKeyPress(
         _ press: KeyPress
     ) -> KeyPress.Result {
-        if disabled { return .ignored }
+        guard enabled else { return .ignored }
         guard press.modifiers.isEmpty else { return .ignored }
         let chars = press.characters
         switch press.key {
