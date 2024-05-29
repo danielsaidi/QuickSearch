@@ -59,8 +59,6 @@ All you have to do to make QuickSearch work, is to apply a `.quickSearch` view m
 }
 ```
 
-If you can add `.quickSearch` directly next to `.searchable`, you can use `.searchable(text:quickSearch:...)` instead. It is not as flexible as `.searchable`, but works well to apply basic `.searchable` capabilities.
-
 For more information, please see the [documentation][Documentation].
 
 
