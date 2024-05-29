@@ -8,16 +8,14 @@
 
 import SwiftUI
 
-/**
- This modifier can be applied to a view hierarchy that has a
- `.searchable` text field, to enable quick search.
- 
- Quick search lets users type to search without first having
- to focus on the text field.
- 
- You can also apply the modifier with a `.quickSearch(text:)`
- view modifier, or `.searchable(text:quickSearch:...)`.
- */
+/// This view modifier can be applied to any views that have
+/// a `.searchable` text field, to enable quick search.
+///
+/// Quick search lets users type into any text field without
+/// first having to focus on the text field.
+///
+/// You can also enable quick search with the view modifiers
+/// `.quickSearch(...)` and `searchable(...quickSearch:)`.
 public struct QuickSearchViewModifier: ViewModifier {
     
     /// Create a quick search view modifier.
@@ -103,7 +101,7 @@ public extension View {
 }
 
 private extension QuickSearchViewModifier {
-    
+
     func extend<Content: View>(
         content: @escaping () -> Content
     ) -> some View {

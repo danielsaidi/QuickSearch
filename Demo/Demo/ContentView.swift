@@ -11,13 +11,16 @@ import SwiftUI
 struct ContentView: View {
     
     let items = Array(0...10_000).map { String($0) }
-    
-    @State private var query = ""
-    
-    @FocusState private var isFocused
-    
-    @AppStorage("isEnabled") private var isEnabled = true
-    
+
+    @AppStorage("isEnabled")
+    private var isEnabled = true
+
+    @FocusState
+    private var isFocused
+
+    @State 
+    private var query = ""
+
     var body: some View {
         NavigationStack {
             List {
