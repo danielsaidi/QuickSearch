@@ -1,6 +1,12 @@
 # Release Notes
 
 
+## 0.2.1
+
+This version adds support for strict concurrency.
+
+
+
 ## 0.2
 
 This version makes the SDK support visionOS.

@@ -17,7 +17,10 @@ let package = Package(
     ],
     targets: [
         .target(
-            name: "QuickSearch"
+            name: "QuickSearch",
+            swiftSettings: [
+                .enableExperimentalFeature("StrictConcurrency")
+            ]
         ),
         .testTarget(
             name: "QuickSearchTests",

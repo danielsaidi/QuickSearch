@@ -16,6 +16,7 @@ import SwiftUI
 ///
 /// You can also enable quick search with the view modifiers
 /// `.quickSearch(...)` and `searchable(...quickSearch:)`.
+@MainActor
 public struct QuickSearchViewModifier: ViewModifier {
     
     /// Create a quick search view modifier.
@@ -61,6 +62,7 @@ public struct QuickSearchViewModifier: ViewModifier {
     }
 }
 
+@MainActor
 public extension View {
     
     /// This view modifier can be applied to a view that has
@@ -160,11 +162,13 @@ private extension QuickSearchViewModifier {
         text = ""
         return .handled
     }
-    
+
     func performAsyncToMakeRepeatPressWork(
         action: @escaping () -> Void
     ) -> KeyPress.Result {
-        DispatchQueue.main.async(execute: action)
+        DispatchQueue.main.async {
+            action()
+        }
         return .handled
     }
 }
