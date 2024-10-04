@@ -1,6 +1,12 @@
 # Release Notes
 
 
+## 0.3
+
+This version makes QuickSearch use Swift 6.
+
+
+
 ## 0.2.1
 
 This version adds support for strict concurrency.
