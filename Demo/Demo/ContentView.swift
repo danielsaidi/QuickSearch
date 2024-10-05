@@ -7,16 +7,16 @@
 //
 
 import SwiftUI
+import QuickSearch
 
 struct ContentView: View {
-    
-    let items = Array(0...10_000).map { String($0) }
-
-    @AppStorage("isEnabled")
-    private var isEnabled = true
 
     @FocusState
     private var isFocused
+
+    @State
+    var items = Array(0...10_000)
+        .map { String("Item \($0)") }
 
     @State 
     private var query = ""
@@ -24,14 +24,16 @@ struct ContentView: View {
     var body: some View {
         NavigationStack {
             List {
-                ForEach(itemsToDisplay, id: \.self) {
-                    Text($0)
+                ForEach(itemsToDisplay, id: \.self) { item in
+                    Button(item) {
+                        print(item)
+                    }
                 }
             }
             .searchable(
                 text: $query,
                 quickSearch: true,
-                // isFocused: $isFocused,
+                isFocused: $isFocused,
                 prompt: Text("Type to search")
             )
         }
