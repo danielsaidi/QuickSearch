@@ -8,9 +8,9 @@ QuickSearch is a SwiftUI SDK that lets you type into a searchable text field wit
 
 ![Library logotype](Logo.png)
 
-QuickSearch is a SwiftUI SDK that lets you type into a `.searchable` text field by just typing, without first having to focus on the text field.
+QuickSearch is a SwiftUI SDK that lets you type into a `.searchable` text field by just typing, without first having to focus on it.
 
-Unlike the native `.searchable(text: $query, isPresented: .constant(true))` view modifier, QuickSearch doesn't show the input cursor to avoid draving attention to the search field. 
+Unlike the native `.searchable(text: $query, isPresented: .constant(true))` view modifier, QuickSearch doesn't show the input cursor, to avoid draving attention to the search field. 
 
 
 
@@ -51,9 +51,7 @@ All you have to do to make QuickSearch work, is to apply `quickSearch: true` to 
 }
 ```
 
-You can also apply the `.quickSearch` view modifier, to any superview, if you can't access `.searchable`.
-
-If you can add `.quickSearch` directly next to `.searchable`, you can use `.searchable(text:quickSearch:...)` instead. It is not as flexible as `.searchable`, but works well to apply basic `.searchable` capabilities.
+You can also apply the `.quickSearch` view modifier, to any superview, if you can't access `.searchable`, use custom focus bindings, etc.
 
 
 
