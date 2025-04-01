@@ -1,6 +1,12 @@
 # Release Notes
 
 
+## 0.4
+
+This version makes QuickSearch compile for all platforms.
+
+
+
 ## 0.3
 
 This version makes QuickSearch use Swift 6.

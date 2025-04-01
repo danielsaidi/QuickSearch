@@ -110,7 +110,9 @@ private extension QuickSearchViewModifier {
     ) -> some View {
         content()
             .focused(isCustomFocused ?? $isFocused)
+            #if !os(watchOS)
             .onKeyPress(action: handleKeyPress)
+            #endif
             .onChange(of: text) {
                 guard $1.isEmpty else { return }
                 isFocused = true
@@ -121,6 +123,7 @@ private extension QuickSearchViewModifier {
             }
     }
     
+    #if !os(watchOS)
     func handleKeyPress(
         _ press: KeyPress
     ) -> KeyPress.Result {
@@ -172,4 +175,5 @@ private extension QuickSearchViewModifier {
         }
         return .handled
     }
+    #endif
 }
