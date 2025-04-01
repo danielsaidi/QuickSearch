@@ -12,7 +12,8 @@ import SwiftUI
 /// a `.searchable` text field, to enable quick search.
 ///
 /// Quick search lets users type into any text field without
-/// first having to focus on the text field.
+/// first having to focus on the text field. Just launch the
+/// app and load the view, and you can start typing.
 ///
 /// You can also enable quick search with the view modifiers
 /// `.quickSearch(...)` and `searchable(...quickSearch:)`.
