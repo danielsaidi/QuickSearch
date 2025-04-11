@@ -30,11 +30,13 @@ struct ContentView: View {
                     }
                 }
             }
+            .navigationTitle("QuickSearch")
             .searchable(
                 text: $query,
                 quickSearch: true,
                 isFocused: $isFocused,
-                prompt: Text("Type to search")
+                placement: .toolbar,
+                prompt: Text("Just start typing to search...")
             )
         }
     }
@@ -43,9 +45,8 @@ struct ContentView: View {
 private extension ContentView {
     
     var itemsToDisplay: [String] {
-        let val = query.trimmingCharacters(in: .whitespacesAndNewlines)
-        if val.isEmpty { return items }
-        return items.filter { $0.contains(query) }
+        if query.isEmpty { return items }
+        return items.filter { $0.localizedCaseInsensitiveContains(query) }
     }
 }
 
