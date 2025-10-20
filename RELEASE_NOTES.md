@@ -1,5 +1,16 @@
 # Release Notes
 
+[QuickSearch](https://github.com/danielsaidi/QuickSearch) will use semver after 1.0.
+
+Until then, breaking changes can happen between minor versions.
+
+
+
+## 0.5
+
+This version updates the package to use Swift 6.1 and the demo to target iOS 26.
+
+
 
 ## 0.4
 
