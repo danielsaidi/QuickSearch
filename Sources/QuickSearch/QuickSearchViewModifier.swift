@@ -8,12 +8,14 @@
 
 import SwiftUI
 
-/// This modifier can be applied to any searchable view to enable Quick Search.
+/// This view modifier can be applied to any searchable view,
+/// to enable Quick Search.
 ///
-/// Quick Search lets you type into any searchable text field, without first having to
-/// focus on the text field.
+/// This lets you type into a searchable text field, without
+/// first having to focus on the text field.
 ///
-/// You can apply Quick Search with the following view modifiers:
+/// You can apply Quick Search with the following modifiers:
+///
 /// - ``SwiftUICore/View/quickSearch(text:isEnabled:isFocused:)``
 /// - ``SwiftUICore/View/searchable(text:quickSearch:isFocused:placement:prompt:)``.
 @MainActor
@@ -65,7 +67,8 @@ public struct QuickSearchViewModifier: ViewModifier {
 @MainActor
 public extension View {
     
-    /// This modifier can be applied to a `.searchable` view to enable Quick Search.
+    /// This modifier can be applied to a `.searchable` view,
+    /// to enable Quick Search.
     ///
     /// See ``QuickSearchViewModifier`` for more information.
     func quickSearch(
@@ -82,8 +85,8 @@ public extension View {
         )
     }
 
-    /// This view modifier can be applied to any view to apply `.searchable`,
-    /// then ``SwiftUICore/View/quickSearch(text:isEnabled:isFocused:)``.
+    /// This view modifier can be applied to a view to apply
+    /// Quick Search enabled `.searchable` modfier.
     ///
     /// See ``QuickSearchViewModifier`` for more information.
     func searchable(

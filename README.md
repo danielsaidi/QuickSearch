@@ -6,7 +6,7 @@
     <img src="https://img.shields.io/github/v/release/danielsaidi/QuickSearch?color=%2300550&sort=semver" alt="Version" />
     <img src="https://img.shields.io/badge/Swift-6.1-orange.svg" alt="Swift 6.1" />
     <a href="https://danielsaidi.github.io/QuickSearch"><img src="https://img.shields.io/badge/documentation-web-blue.svg" alt="Documentation" /></a>
-    <a href="https://github.com/danielsaidi/QuickSearch/blob/master/LICENSE"><img src="https://img.shields.io/github/license/danielsaidi/QuickSearch" alt="MIT License" /></a>
+    <a href="https://github.com/danielsaidi/QuickSearch/blob/main/LICENSE"><img src="https://img.shields.io/github/license/danielsaidi/QuickSearch" alt="MIT License" /></a>
 </p>
 
 
